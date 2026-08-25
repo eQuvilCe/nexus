@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexus Products</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Neue+Haas+Grotesk+Display+Pro:wght@400;500;700&family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+<meta name="description" content="Nexus products — Edge, AI, Database, Auth, Analytics, Storage, Packages and Functions.">
+<meta name="theme-color" content="#0a0a0a">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f5f7;
+    --gray: #86868b;
+    --blue: #0071e3;
+    --blue-light: #2997ff;
+    --surface: #1c1c1e;
+    --surface2: #2c2c2e;
+    --border: rgba(255,255,255,0.08);
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    opacity: 0;
+    animation: pageFadeIn 0.6s ease forwards;
+  }
+  @keyframes pageFadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .page-transitioning {
+    opacity: 0 !important;
+    transform: translateY(-15px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--gray); }
+
+
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 52px;
+    background: rgba(10,10,10,0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid var(--border);
+    transition: background 0.3s;
+  }
+  .nav-logo { font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: -0.03em; color: var(--white); text-decoration: none; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: rgba(245,245,247,0.7); text-decoration: none; font-size: 13px; font-weight: 400; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta { background: var(--blue); color: #fff !important; padding: 7px 18px; border-radius: 980px; font-size: 13px !important; font-weight: 500 !important; transition: background 0.2s !important; }
+  .nav-cta:hover { background: var(--blue-light) !important; color: #fff !important; }
+
+  /* Hamburger & Mobile Menu */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    padding: 4px;
+    z-index: 101;
+    cursor: pointer;
+  }
+  .nav-hamburger span {
+    width: 22px; height: 1.5px; background: var(--white); border-radius: 2px; transition: transform 0.3s, opacity 0.3s;
+  }
+  @media (max-width: 600px) { .nav-hamburger { display: flex; } }
+
+  .mobile-menu {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10,10,10,0.98); backdrop-filter: blur(20px);
+    z-index: 99; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+  }
+  .mobile-menu.active { opacity: 1; pointer-events: all; }
+  .mobile-menu a {
+    font-family: var(--font-display); font-size: 32px; color: var(--white); text-decoration: none;
+    opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .mobile-menu.active a { opacity: 1; transform: translateY(0); }
+  .mobile-menu.active a:nth-child(1) { transition-delay: 0.1s; }
+  .mobile-menu.active a:nth-child(2) { transition-delay: 0.15s; }
+  .mobile-menu.active a:nth-child(3) { transition-delay: 0.2s; }
+  .mobile-menu.active a:nth-child(4) { transition-delay: 0.25s; }
+
+  /* Footer */
+  footer { background: var(--surface); border-top: 0.5px solid var(--border); padding: 60px 48px 40px; margin-top: 100px; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; padding-bottom: 48px; border-bottom: 0.5px solid var(--border); margin-bottom: 32px; }
+  @media (max-width: 800px) { .footer-top { grid-template-columns: 1fr 1fr; } }
+  .footer-brand p { font-size: 14px; font-weight: 300; color: var(--gray); margin-top: 12px; max-width: 260px; line-height: 1.6; }
+  .footer-col h4 { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); margin-bottom: 16px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a { font-size: 14px; font-weight: 300; color: rgba(245,245,247,0.6); text-decoration: none; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--white); }
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .footer-bottom p { font-size: 13px; color: var(--gray); }
+
+  /* Products Page Specific Styles */
+  .products-header {
+    padding: 160px 24px 80px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .products-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 6vw, 80px);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+  .products-header p {
+    font-size: 20px;
+    color: var(--gray);
+    font-weight: 300;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
+    padding: 0 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    perspective: 1000px;
+  }
+  
+  .tilt-card-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .tilt-card-wrapper.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Stagger delays */
+  .tilt-card-wrapper:nth-child(1) { transition-delay: 0.1s; }
+  .tilt-card-wrapper:nth-child(2) { transition-delay: 0.2s; }
+  .tilt-card-wrapper:nth-child(3) { transition-delay: 0.3s; }
+  .tilt-card-wrapper:nth-child(4) { transition-delay: 0.4s; }
+
+  .tilt-card {
+    width: 100%;
+    height: 100%;
+    background: var(--surface);
+    border-radius: 24px;
+    border: 1px solid var(--border);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: transform 0.1s;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  /* Glare effect */
+  .glare {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    transform: translateZ(1px);
+  }
+
+  .tilt-card-icon {
+    font-size: 48px;
+    margin-bottom: auto;
+    transform: translateZ(30px);
+  }
+
+  .tilt-card h3 {
+    font-family: var(--font-display);
+    font-size: 32px;
+    margin-bottom: 12px;
+    transform: translateZ(40px);
+  }
+  .tilt-card p {
+    color: var(--gray);
+    font-size: 16px;
+    font-weight: 300;
+    transform: translateZ(20px);
+  }
+
+  /* Background gradients for cards */
+  .card-bg-1 { background: linear-gradient(135deg, rgba(0,113,227,0.1) 0%, var(--surface) 50%); }
+  .card-bg-2 { background: linear-gradient(135deg, rgba(94,92,230,0.1) 0%, var(--surface) 50%); }
+  .card-bg-3 { background: linear-gradient(135deg, rgba(48,209,88,0.1) 0%, var(--surface) 50%); }
+  .card-bg-4 { background: linear-gradient(135deg, rgba(255,159,10,0.1) 0%, var(--surface) 50%); }
+
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav id="navbar">
+  <a href="apple-website.html" class="nav-logo">Nexus</a>
+  <ul class="nav-links">
+    <li><a href="apple-website.html">Home</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="apple-website.html#pricing">Pricing</a></li>
+    <li><a href="#" class="nav-cta">Get started</a></li>
+    <li><button class="theme-toggle" type="button" aria-label="Switch to light mode">☀️</button></li>
+  </ul>
+  <button class="nav-hamburger" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<header class="products-header" id="main-content">
+  <h1>Our Ecosystem</h1>
+  <p>Discover the tools powering the next generation of digital experiences. Beautifully designed, infinitely scalable.</p>
+</header>
+
+<div class="filter-bar">
+  <input type="search" class="filter-search" id="productSearch" placeholder="Search products…" aria-label="Search products">
+  <button class="filter-chip active" data-filter="all" type="button">All</button>
+  <button class="filter-chip" data-filter="infra" type="button">Infrastructure</button>
+  <button class="filter-chip" data-filter="ai" type="button">AI</button>
+  <button class="filter-chip" data-filter="data" type="button">Data</button>
+  <button class="filter-chip" data-filter="security" type="button">Security</button>
+</div>
+
+<section class="products-grid" id="productsGrid">
+  <div class="tilt-card-wrapper" data-category="infra" data-name="Nexus Edge deploy globally milliseconds cache assets users">
+    <div class="tilt-card card-bg-1">
+      <div class="glare"></div>
+      <div class="tilt-card-icon">⚡</div>
+      <h3>Nexus Edge</h3>
+      <p>Deploy globally in milliseconds. Our edge network caches your assets closer to your users.</p>
+    </div>
+  </div>
+  
+  <div class="tilt-card-wrapper" data-category="ai" data-name="Nexus AI language vision models api">
+    <div class="tilt-card card-bg-2">
+      <div class="glare"></div>
+      <div class="tilt-card-icon">🧠</div>
+      <h3>Nexus AI</h3>
+      <p>Integrate state-of-the-art language and vision models into your app with a single API call.</p>
+    </div>
+  </div>
+
+  <div class="tilt-card-wrapper" data-category="data" data-name="Nexus Database serverless postgres scales">
+    <div class="tilt-card card-bg-3">
+      <div class="glare"></div>
+      <div class="tilt-card-icon">🗄️</div>
+      <h3>Nexus Database</h3>
+      <p>Serverless Postgres that scales automatically to zero and up to millions of requests.</p>
+    </div>
+  </div>
+
+  <div class="tilt-card-wrapper" data-category="security" data-name="Nexus Auth authentication user management authorization">
+    <div class="tilt-card card-bg-4">
+      <div class="glare"></div>
+      <div class="tilt-card-icon">🔐</div>
+      <h3>Nexus Auth</h3>
+      <p>Drop-in authentication, user management, and fine-grained authorization policies.</p>
+    </div>
+  </div>
+
+  <div class="tilt-card-wrapper" data-category="data" data-name="Nexus Analytics insights data visualization telemetry" style="transition-delay: 0.5s;">
+    <div class="tilt-card card-bg-1">
+      <div class="glare"></div>
+      <div class="tilt-card-icon">📊</div>
+      <h3>Nexus Analytics</h3>
+      <p>Real-time insights and data visualization. Understand your users with powerful telemetry.</p>
+    </div>
+  </div>
+
+  <div class="tilt-card-wrapper" data-category="infra" data-name="Nexus Storage object storage files latency" style="transition-delay: 0.6s;">
+    <div class="tilt-card card-bg-2">
+      <div class="glare"></div>
+      <div class="tilt-card-icon">☁️</div>
+      <h3>Nexus Storage</h3>
+      <p>Infinitely scalable object storage. Serve massive files globally with ultra-low latency.</p>
+    </div>
+  </div>
+
+  <div class="tilt-card-wrapper" data-category="infra" data-name="Nexus Packages registry team cicd pipelines" style="transition-delay: 0.7s;">
+    <div class="tilt-card card-bg-3">
+      <div class="glare"></div>
+      <div class="tilt-card-icon">📦</div>
+      <h3>Nexus Packages</h3>
+      <p>Private package registry for your team. Seamlessly integrate with CI/CD pipelines.</p>
+    </div>
+  </div>
+
+  <div class="tilt-card-wrapper" data-category="infra" data-name="Nexus Functions edge servers cold starts" style="transition-delay: 0.8s;">
+    <div class="tilt-card card-bg-4">
+      <div class="glare"></div>
+      <div class="tilt-card-icon">⚙️</div>
+      <h3>Nexus Functions</h3>
+      <p>Run code on the edge without managing servers. Instant cold starts globally.</p>
+    </div>
+  </div>
+
+  <p class="no-results" id="noResults">No products match your search. Try a different term or filter.</p>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div style="font-family:var(--font-display);font-size:24px;font-weight:700;letter-spacing:-0.03em">Nexus</div>
+        <p>Technology reimagined for a world that moves at the speed of thought.</p>
+        <form class="newsletter-form" aria-label="Subscribe to the newsletter">
+          <input type="email" placeholder="Your email" aria-label="Email address" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="products.html">Features</a></li>
+          <li><a href="apple-website.html#pricing">Pricing</a></li>
+          <li><a href="#">Changelog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Nexus Technologies Inc. All rights reserved.</p>
+      <p style="color:rgba(134,134,139,0.6)">Made with ♥ for the future</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+<script>
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.tilt-card-wrapper').forEach(el => observer.observe(el));
+
+  // Nav effect (throttled with rAF)
+  let navTicking = false;
+  window.addEventListener('scroll', () => {
+    if (navTicking) return;
+    navTicking = true;
+    requestAnimationFrame(() => {
+      const nav = document.getElementById('navbar');
+      nav.style.background = window.scrollY > 40 ? 'rgba(10,10,10,0.92)' : 'rgba(10,10,10,0.7)';
+      navTicking = false;
+    });
+  }, { passive: true });
+
+  // Search + category filter
+  const searchInput = document.getElementById('productSearch');
+  const filterChips = document.querySelectorAll('.filter-chip');
+  const cards = Array.from(document.querySelectorAll('.tilt-card-wrapper'));
+  const noResults = document.getElementById('noResults');
+  let activeFilter = 'all';
+
+  function applyFilters() {
+    const query = searchInput.value.trim().toLowerCase();
+    let visibleCount = 0;
+    cards.forEach(card => {
+      const matchesCategory = activeFilter === 'all' || card.dataset.category === activeFilter;
+      const matchesSearch = !query || card.dataset.name.toLowerCase().includes(query);
+      const show = matchesCategory && matchesSearch;
+      card.style.display = show ? '' : 'none';
+      if (show) visibleCount++;
+    });
+    noResults.classList.toggle('show', visibleCount === 0);
+  }
+
+  searchInput.addEventListener('input', applyFilters);
+
+  filterChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      filterChips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeFilter = chip.dataset.filter;
+      applyFilters();
+    });
+  });
+
+  // Page transitions
+  document.querySelectorAll('a[href$=".html"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const target = e.currentTarget.href;
+      const currentPath = window.location.pathname.split('/').pop() || 'apple-website.html';
+      const targetPath = new URL(target).pathname.split('/').pop();
+
+      if (targetPath !== currentPath) {
+        e.preventDefault();
+        document.body.classList.add('page-transitioning');
+        setTimeout(() => { window.location.href = target; }, 400);
+      }
+    });
+  });
+
+  // 3D Tilt Effect (skipped under reduced motion — purely decorative)
+  if (!window.prefersReducedMotion) {
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      const glare = card.querySelector('.glare');
+
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -10; // Max rotation 10deg
+        const rotateY = ((x - centerX) / centerX) * 10;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+
+        // Update glare
+        glare.style.opacity = '1';
+        glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.15), transparent 60%)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        glare.style.opacity = '0';
+      });
+    });
+  }
+
+  // Mobile menu
+  const hamburger = document.querySelector('.nav-hamburger');
+  const mobileMenu = document.createElement('div');
+  mobileMenu.className = 'mobile-menu';
+  mobileMenu.innerHTML = `
+    <a href="apple-website.html">Home</a>
+    <a href="products.html">Products</a>
+    <a href="about.html">About</a>
+    <a href="apple-website.html#pricing">Pricing</a>
+  `;
+  document.body.appendChild(mobileMenu);
+
+  let menuOpen = false;
+  hamburger.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    mobileMenu.classList.toggle('active', menuOpen);
+    hamburger.setAttribute('aria-expanded', String(menuOpen));
+    const spans = hamburger.querySelectorAll('span');
+    if (menuOpen) {
+      spans[0].style.transform = 'translateY(6.5px) rotate(45deg)';
+      spans[1].style.opacity = '0';
+      spans[2].style.transform = 'translateY(-6.5px) rotate(-45deg)';
+    } else {
+      spans[0].style.transform = 'none';
+      spans[1].style.opacity = '1';
+      spans[2].style.transform = 'none';
+    }
+  });
+
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', e => {
+      const target = e.currentTarget.href;
+      const currentPath = window.location.pathname.split('/').pop() || 'apple-website.html';
+      const targetPath = new URL(target).pathname.split('/').pop();
+
+      if (targetPath !== currentPath) {
+        e.preventDefault();
+        document.body.classList.add('page-transitioning');
+        setTimeout(() => { window.location.href = target; }, 400);
+      } else {
+        menuOpen = false;
+        mobileMenu.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        const spans = hamburger.querySelectorAll('span');
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+      }
+    });
+  });
+  </script>
+</body>
+</html>
